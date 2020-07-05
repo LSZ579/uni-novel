@@ -1,8 +1,7 @@
 # uni-novel
-# 利用业余时间写的一个demo，复刻小程序版
-# 还有很多界面还没实现
-# 安装依赖npm install
-# 封装api请求
+### 利用业余时间写的一个demo，复刻小程序版,还有很多界面还没实现
+### 安装依赖npm install
+## 封装api请求
 
 ````const api = (url = '', date = {}, type = 'get', search = '', header = {
 
