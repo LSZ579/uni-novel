@@ -1,0 +1,106 @@
+{
+	"pages": [{
+			"path": "pages/index/index",
+			// "enablePullDownRefresh": true,
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+				        "animationType": "fade-in",
+				        "animationDuration": 300
+				    }
+			}
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/demo/demo",
+			"style": {
+				"navigationBarTitleText": "文章详情"
+			}
+		},{
+			"path":"pages/book_self/book_self",
+			"style":{
+				"navigationBarTitleText":"我的书架"
+			}
+		}
+	    ,{
+            "path" : "pages/book-detail/book-detail",
+            "style" : {
+				   "navigationStyle": "custom",
+				   "app-plus": {
+				           "animationType": "fade-in",
+				           "animationDuration": 300
+				       }
+			}
+        }
+        ,{
+            "path" : "pages/read/read",
+            "style" : {
+				"navigationStyle": "custom",
+				"navigationBarTitleText":"yuedu"
+			}
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {
+				"navigationBarTitleText":"登录"
+			}
+        }
+        ,{
+            "path" : "pages/login/register",
+            "style" : {
+				"navigationBarTitleText":"注册"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#17b5af",
+		"backgroundColor": "#17b5af"
+	},
+	"tabBar": {
+		"color": "#9f9f9f",
+		"selectedColor": "#17b5af",
+		"borderStyle": "black",
+		"backgroundColor": "white",
+		"list": [
+			{
+				"pagePath": "pages/book_self/book_self",
+				"text": "书架",
+				"selectedIconPath": "static/images/tabBar/books_select.png",
+				"iconPath": "static/images/tabBar/books.png"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"selectedIconPath": "static/images/tabBar/caidan_select.png",
+				"iconPath": "static/images/tabBar/caidan.png"
+			},
+			{
+				"pagePath":"pages/search/search",
+				"text":"搜索",
+				"selectedIconPath":"static/images/tabBar/sou_select.png",
+				"iconPath":"static/images/tabBar/sou.png"
+				
+			},
+			{
+				"pagePath": "pages/my/my",
+				"text": "个人中心",
+				"selectedIconPath": "static/images/tabBar/my_select.png",
+				"iconPath": "static/images/tabBar/my.png"
+			}
+		]
+	}
+}
