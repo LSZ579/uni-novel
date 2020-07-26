@@ -44,10 +44,10 @@
 		<view class="list">
 			<view class="directory" @click="toNewestRead()" style="border-top: 15rpx solid rgb(240, 240, 240);margin-top:20rpx">
 				<view class="directory_t">最新</view>
-				<view  class="directory_z" v-if="detail.book.famous">
+				<view class="directory_z" v-if="detail.book.famous">
 					第{{detail.book.content_num}}章
 				</view>
-				<view  v-else class="directory_z">{{newContent.title}}</view>
+				<view v-else class="directory_z">{{newContent.title}}</view>
 				<image class="icon" src="../../static/images/tabBar/my.png"></image>
 			</view>
 
@@ -120,6 +120,25 @@
 			</button>
 			<button v-else class="status2" @click="colect">移出书架</button>
 		</view>
+		<view class="pop">
+			<uni-popup ref="popup" type="bottom">
+				<view style="background-color: #ffffff;padding: 10rpx;padding-top: 20rpx;">
+					<view>
+						<textarea class="uni-textarea" v-model="comments" selection-start="2" @blur="bindTextAreaBlur" :cursor="2" placeholder-class="placeholder"
+						 focus="true" placeholder="请输入内容" />
+						</view>
+				<view class="comment" style="display:inline-flex;margin-top: 10px;">
+					<view class="if-score">
+						评分
+					</view>
+					<view>
+						<uni-rate style="margin-top: 12px;" v-model="scores" @change="getScore"></uni-rate>
+					</view>
+				</view>
+				<button class="submit" @click="sumComment" type="primary">提交评论</button>
+			</view>
+			</uni-popup>
+		</view>
 	</view>
 </template>
 
@@ -133,7 +152,10 @@
 				count: 0,
 				book_id: '',
 				bookCollect: 0,
+				comments:'',
 				commentsList: [],
+				scores:0,
+				info:{},
 				query: {
 					page: 1,
 					size: 5
@@ -148,6 +170,10 @@
 			this.getComment(options.id)
 		},
 		methods: {
+			getScore(val){
+				console.log(val)
+				this.scores=val.value
+			},
 			getDetail(id) {
 				uni.showLoading({
 					title: '正在加载'
@@ -160,6 +186,10 @@
 					this.count = res.book.count
 				})
 			},
+			 comment(){
+			         this.$refs.popup.open()
+					 this.getuid()
+			      },
 			clickLeft() {
 				uni.navigateBack({
 					delta: 1
@@ -177,7 +207,7 @@
 			},
 			toRead() {
 				uni.navigateTo({
-					url: '../read/read?bookid=' + this.book_id
+					url: '../read/read?bookid=' + this.book_id+'&&con_id=1'
 				})
 			},
 			getCollectStatus() {
@@ -198,16 +228,47 @@
 					this.getCollectStatus()
 					if (!res) {
 						uni.showToast({
-							title: '收藏成功',
+							title: '移除书架',
 							icon: 'success'
 						})
 					} else {
 						uni.showToast({
-							title: "移除书架",
+							title: "收藏成功",
 							icon: 'success'
 						})
 					}
 				})
+			},
+		getuid(){
+			this.$request('/token/uid',{},'post')
+			.then(res=>{
+				this.info=res
+			})
+		},
+			sumComment(){
+				console.log(this.scores)
+				if(this.comments==undefined||!this.comments){
+					uni.showToast({
+						title:'内容不能为空',
+						type:'fail'
+					})
+				}
+				else{
+					this.$request('/comment',{
+						 "book_id": this.book_id,
+						  "user_avatar": this.info.avatar,
+						  "user_name": this.info.user_name,
+						  "score": this.scores,
+						  "comments":this.comments
+					},'post').then(res=>{
+						this.getComment(this.book_id)
+						uni.showToast({
+							title:'提交成功',
+							icon:'success'
+						})
+						this.$refs.popup.close()
+					})
+				}
 			},
 			toNewestRead(){
 				uni.navigateTo({
@@ -244,7 +305,30 @@
 		font-size: 30rpx;
 		line-height: 55rpx;
 	}
-
+	/* 写评论 */
+	.uni-textarea{
+		margin:  0 auto;
+		width: 100%;
+		height: 250rpx;
+		background-color: #f9f9f9;
+	}
+	.comment{
+		
+	}
+	.placeholder{
+		
+		padding-left: 10rpx;
+	}
+	.if-score{
+		font-size: 32rpx;
+		padding-right: 15rpx;
+	}
+	.submit{
+		margin-top: 25rpx;
+	}
+	.to-score{
+		margin-tpp: 35rpx;
+	}
 	/* section */
 	.section {
 		font-size: 30rpx;

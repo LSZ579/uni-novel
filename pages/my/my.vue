@@ -10,12 +10,15 @@
 		<view class="isLogin" >
 			<view class="my" v-if="status">
 			  <view class='bgm'>
-			    <view class="avatar">
-			      <image class="avatar_img" src="../../static/images/avatar/avatar.png"></image>
-			      <view class="name">
+			    <view class="avatar" >
+			      <image @click="settingInfo" class="avatar_img"  :style="{backgroundImage:'url('+require('../../static/images/avatar/上传头像.png')+')'}"  :src="user.avatar"></image>
+			      <view @click="settingInfo" class="name">
 			        <text class="avatar_name">{{user.user_name}}</text>
 			        <text class="login">状态：已登录</text>
 			      </view>
+				  <view class="logout" >
+					<text @click="logOut">退出登录</text>
+				  </view>
 			    </view>
 			  </view>
 			  <view class="myInformation">
@@ -112,11 +115,21 @@
 			return {
 				status:false,
 				info:'',
-				user:''
+				user:'',
+				avate:'../../static/images/avatar/上传头像.png'
 			}
 		},
 		onLoad() {
 		
+		},
+		onPullDownRefresh() {
+			var that=this
+			uni.getStorageSync('token')?this.status=true:this.status=false
+			that.getuid()
+			that.getInfo()
+				setTimeout(() => {
+							uni.stopPullDownRefresh()
+						}, 1000)
 		},
 		onShow() {
 			uni.getStorageSync('token')?this.status=true:this.status=false
@@ -128,12 +141,23 @@
 				that.getInfo()
 		},
 		methods: {
+			settingInfo(){
+				console.log(6666)
+				uni.navigateTo({
+					url:'../setInfo/setInfo?name='+this.user.user_name+'&url='+this.user.avatar
+				})
+			},
 			login(){
 				this.$request('/token/phone',{ac:123666,se:123456},'post').then(res=>{
 					console.log(res)
 					this.token=res.token
 					uni.setStorageSync('token',res.token)
 				})
+			},
+			logOut(){
+				uni.clearStorage('token')
+				this.status=false
+				console.log(555)
 			},
 			getuid(){
 				this.$request('/token/uid',{},'post')
@@ -170,7 +194,12 @@
   border-radius:15rpx ;
   box-shadow: 0 0 10rpx rgba(167, 167, 167, 0.2)
 }
-
+.logout{
+	text-align: right;
+	font-size: 26rpx;
+	color: #bd0000;
+	flex: 1;
+}
 .avatar{
   display: flex;
   flex-direction: row;
@@ -192,6 +221,8 @@
   height: 100rpx;
   border: 1rpx gainsboro solid;
   border-radius: 65rpx;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .name{
   display: flex;

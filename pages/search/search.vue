@@ -1,24 +1,32 @@
 <template>
 	<view class="mains">
+		<view class="navar">
+			<uni-nav-bar background-color="#fffcfe" fixed="true" status-bar="true" color="black" 
+			 right-text="目录" title="图书详情"></uni-nav-bar>
+		</view>
+		<Search @confirm="inputSearch" />
 	<!-- 	<uni-nav-bar >
 		    <view style="text-align: center;width: 100%;">个人中心</view>
-		  
+		  <>
 		</uni-nav-bar> -->
 		
 		<!-- <uni-nav-bar left-icon="" fixed="true" left-text=" s" right-text="菜单" title="搜索图书"></uni-nav-bar> -->
-		<view class="se">
+	<!-- 	<view class="se">
 			<uni-search-bar maxlength="30" :radius="100" @confirm="search" @input="inputSearch"></uni-search-bar>
-		</view>
+		</view> -->
 	<!-- 	<view class="searchList" v-for="item in searchList">
 			<view class="">
 				{{item.name}}
 			</view>
 		</view> -->
-		<view style="height: 110rpx;">
+<!-- 		<view style="height: 110rpx;">
 			
-		</view>
+		</view> -->
 		<view class="book">
-			<view class="bookList" v-for="(item,index) in list">
+			<view style="color: rgb(145, 145, 145);text-align: center;font-size: 28rpx;" v-if="list.length==0">
+				啥都没找到！！
+			</view>
+			<view class="bookList" v-for="(item,index) in list" @click="toDetail(item.id)">
 				<image class="book-img" :src="item.main_img_url"></image>
 				<view class="book-description">
 					<view class="book-name">
@@ -43,7 +51,9 @@
 </template>
 
 <script>
+	import Search from '@/components/search/index.vue'
 	export default {
+		components:{Search},
 		data() {
 			return {
 				list:[],
@@ -56,9 +66,17 @@
 				console.log(val.value)
 					
 			},
+			toDetail(id) {
+				console.log(id)
+				uni.navigateTo({
+					url: '../book-detail/book-detail?id=' + id,
+					animationType: 'pop-in',
+					animationDuration: 200
+				})
+			},
 			inputSearch(val){
 				console.log(val)
-				this.$request('/book/search',{keyword:val.value},'get',1).then(res=>{
+				this.$request('/book/search',{keyword:val},'get',1).then(res=>{
 					console.log(res.data)
 					this.searchList=res.data.data
 					this.list=res.data.data
@@ -72,6 +90,7 @@
 </script>
 
 <style scoped>
+	
 	.mains{
 		background-color: rgb(240, 240, 240);
 		height: 100vh;

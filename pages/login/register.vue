@@ -107,7 +107,7 @@
 					});
 					return false;
 				}
-				if (this.phoneData.length <= 5) {
+				if (this.phoneData.length <= 2) {
 					uni.showToast({
 						icon: 'none',
 						position: 'bottom',

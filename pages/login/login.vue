@@ -70,6 +70,30 @@
 			wInput,
 			wButton,
 		},
+		onShow() {
+			let token=''
+			uni.getStorage({
+				key: 'token',
+				success: function(res) {
+					console.log(res.data);
+					token = res.data;
+				}
+			});
+			
+				this.$request('/token/verify',{token:token},'post').then(res=>{
+					console.log(res)
+					if(res.isValid==false||res.error_code==10000){ 
+						console.log('登录过期100')
+					}
+					else{
+						uni.switchTab({
+						    url: '/pages/index/index'
+						});
+						console.log(6589)
+					}
+				})
+			
+		},
 		mounted() {
 			_this= this;
 			//this.isLogin();

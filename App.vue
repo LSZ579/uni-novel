@@ -5,6 +5,12 @@ export default {
 	},
 	onShow: function() {
 		console.log('App Show');
+		// this.$store.commit('login')
+		// if(!this.$store.state.loginStatus){
+		// 	uni.navigateTo({
+		// 		url:'./pages/login/login'
+		// 	})
+		// }
 	},
 	onHide: function() {
 		console.log('App Hide');

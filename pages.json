@@ -14,6 +14,7 @@
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh":true,
 				"navigationStyle": "custom"
 			}
 		},
@@ -31,6 +32,7 @@
 		},{
 			"path":"pages/book_self/book_self",
 			"style":{
+				"enablePullDownRefresh": true,
 				"navigationBarTitleText":"我的书架"
 			}
 		}
@@ -48,7 +50,7 @@
             "path" : "pages/read/read",
             "style" : {
 				"navigationStyle": "custom",
-				"navigationBarTitleText":"yuedu"
+				"navigationBarTitleText":"阅读"
 			}
         }
         ,{
@@ -61,6 +63,12 @@
             "path" : "pages/login/register",
             "style" : {
 				"navigationBarTitleText":"注册"
+			}
+        }
+        ,{
+            "path" : "pages/setInfo/setInfo",
+            "style" : {
+				"navigationBarTitleText":"修改信息"
 			}
         }
     ],
