@@ -1,58 +1,23 @@
-# uni-novel
-# 利用业余时间写的一个demo，复刻小程序版
-# 还有很多界面还没实现
-# 安装依赖npm install
-# 封装api请求
 
-````const api = (url = '', date = {}, type = 'get', search = '', header = {
+### uni-novel
+### 利用业余时间写的一个demo，复刻小程序版
+### 还有很多界面还没实现
+### 安装依赖npm install
 
-	'content-type': 'application/x-www-form-urlencoded'
-}) => {
-	uni.getStorage({
-		key: 'token',
-		success: function(res) {
-			console.log(res.data);
-			header.token = res.data;
-		}
-	});
-	return new Promise((resolve, reject) => {
-		console.log(resolve, reject)
-		uni.request({
-			method: type,
-			url: baseUrl + url,
-			data: date,
-			header: header,
-		}).then((response) => {
-			setTimeout(function() {
-				uni.hideLoading();
-			}, 200);
-			let [error, res] = response;
-			if (response[1].data.error_code == 1001) {
-				uni.showModal({
-					title: '登录已失效',
-					content: '请重新登录，才能使用完整功能',
-					cancelText: '拒绝',
-					confirmText: '去登录',
-					success: function(res) {
-						if (res.confirm) {
-							console.log('用户点击确定');
-							uni.navigateTo({
-								url: '/pages/login/login'
-							})
-						} else if (res.cancel) {
-							console.log('用户点击取消');
-						}
-					}
+# 完整版
+后端接口使用thinkPhp5.0写的，管理后台使用layui，微信小程序端使用微信小程序原生写的，客户端可以分章节阅读、点评、搜索、留言、图书收藏等功能，后台包括图书的上传，管理，轮播图管理，留言管理等功能模块
+**1.可以连载小说，分章节上传，自动切割章节（需要特定章节格式），所有的小说内容均以txt文本存储，上传小说是通过txt文本上传**
+**2.在线阅读，评论小说，点赞和收藏，评分，统计平均分排行，分类等**
+**3.动态添加分类**
+## 微信小程序效果图，原生小程序编写
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200808115525201.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTMwODQzNg==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200808115551241.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTMwODQzNg==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200808115550805.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTMwODQzNg==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200808115547968.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTMwODQzNg==,size_16,color_FFFFFF,t_70)
 
-				})
-			}
-			resolve(res.data);
-		}).catch(error => {
-			let [err, res] = error;
-			reject(err)
-			console.log(22222222, error)
-		})
-	});
-}
-export default api
-```
+
+## 管理后台
+基于layui的
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210420110243275.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MTMwODQzNg==,size_16,color_FFFFFF,t_70)
+
+## 需要源码的加qq: 122720267（不免费）
